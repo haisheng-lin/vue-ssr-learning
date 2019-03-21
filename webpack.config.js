@@ -23,6 +23,14 @@ module.exports = {
         ],
       },
       {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader', // less-loader 会转化 less 为 css，所以还得给 css-loader 处理
+        ],
+      },
+      {
         test: /\.(jpg|png|jpeg|gif|svg)$/,
         use: [
           {
