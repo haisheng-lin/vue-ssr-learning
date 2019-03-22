@@ -2,8 +2,15 @@ const path = require('path');
 // vue-loader was used without the corresponding plugin. Make sure to include VueLoaderPlugin in your webpack config.
 // 所以要手动在 webpack 配置中加上这个插件
 const { VueLoaderPlugin } = require('vue-loader');
+const HtmlPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+// windows npm script 设置变量是通过 set NODE_ENV=production
+// mac npm script 设置变量是 NODE_ENV=production NODE_ENV=production
+// 使用 cross-env 可以统一设置环境变量的方式: cross-env 
+const isDev = process.env.NODE_ENV === 'development';
 
-module.exports = {
+const config = {
+  target: 'web',
   entry: path.join(__dirname, 'src/index.js'),
   output: {
     filename: 'bundle.js',
@@ -45,6 +52,31 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: isDev ? '"development"' : '"production"',
+      },
+    }),
     new VueLoaderPlugin(),
+    new HtmlPlugin(),
   ],
 };
+
+if (isDev) {
+  config.devtool = '#cheap-module-eval-source-map';
+  config.devServer = { // 支持热更新
+    port: 8000,
+    host: '0.0.0.0',
+    overlay: {
+      errors: true,
+    },
+    hot: true, // 只重加载改动的组件
+    // open: true, // 每次都会自动打开页面
+  };
+  config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  );
+}
+
+module.exports = config;
