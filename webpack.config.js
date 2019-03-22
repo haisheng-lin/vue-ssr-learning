@@ -93,7 +93,7 @@ if (isDev) {
   // 将类库与第三方依赖单独打包成 vendor，因为如果跟业务代码混在一起，那么由于业务经常更新所以导致这些都无法长期缓存
   config.entry = {
     app: path.join(__dirname, 'src/index.js'),
-    vendor: ['vue'],
+    // vendor: ['vue'],
   };
   // chunkhash 与 hash 的区别：
   // chunkhash 如果你的文件不改变（类库），那么下次打包时的哈希值不会变；但是 hash 每次都会变
@@ -119,12 +119,21 @@ if (isDev) {
     new ExtractPlugin('styles.[hash:8].css'),
     // 在 webpack3 是 webpack.optimize.CommonsChunkPlugin
     new webpack.optimize.SplitChunksPlugin({
-      name: 'vendor', // 跟 entry 的键值一样
-    }),
-    new webpack.optimize.SplitChunksPlugin({
       name: 'runtime',
     }),
   );
+  // 在 webpack4 中分离代码要这么写
+  config.optimization = {
+    splitChunks: {
+      cacheGroups: {
+        commons: { // 这个键值暂时不知道对打包有什么用
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  };
 }
 
 module.exports = config;
