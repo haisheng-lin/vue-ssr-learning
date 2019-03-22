@@ -23,6 +23,10 @@ const config = {
         loader: 'vue-loader',
       },
       {
+        test: /\.jsx$/,
+        loader: 'babel-loader',
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -34,6 +38,12 @@ const config = {
         use: [
           'style-loader',
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
           'less-loader', // less-loader 会转化 less 为 css，所以还得给 css-loader 处理
         ],
       },
