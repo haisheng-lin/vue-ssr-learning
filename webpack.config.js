@@ -90,27 +90,40 @@ if (isDev) {
     new webpack.NoEmitOnErrorsPlugin(),
   );
 } else {
+  // 将类库与第三方依赖单独打包成 vendor，因为如果跟业务代码混在一起，那么由于业务经常更新所以导致这些都无法长期缓存
+  config.entry = {
+    app: path.join(__dirname, 'src/index.js'),
+    vendor: ['vue'],
+  };
+  // chunkhash 与 hash 的区别：
+  // chunkhash 如果你的文件不改变（类库），那么下次打包时的哈希值不会变；但是 hash 每次都会变
+  // 所以第三方依赖与类库需要使用 chunkhash，否则单独打包就没意义了，也无法做长期缓存
   config.output.filename = '[name].[chunkhash:8].js';
-  config.module.rules.push(
-    {
-      test: /\.less$/,
-      use: ExtractPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-            },
+  config.module.rules.push({
+    test: /\.less$/,
+    use: ExtractPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
           },
-          'less-loader',
-        ],
-      }),
-    }
-  );
+        },
+        'less-loader',
+      ],
+    }),
+  });
   config.plugins.push(
     new ExtractPlugin('styles.[hash:8].css'),
+    // 在 webpack3 是 webpack.optimize.CommonsChunkPlugin
+    new webpack.optimize.SplitChunksPlugin({
+      name: 'vendor', // 跟 entry 的键值一样
+    }),
+    new webpack.optimize.SplitChunksPlugin({
+      name: 'runtime',
+    }),
   );
 }
 
