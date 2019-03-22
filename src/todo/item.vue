@@ -33,7 +33,7 @@ export default {
     font-size: 24px;
     border-bottom: 1px solid rgba(0,0,0,0.06);
     &:hover {
-      .destory:after {
+      .destroy:after {
         content: '×';
       }
     }
