@@ -7,8 +7,20 @@
       placeholder="接下去要做什么?"
       @keyup.enter="addTodo"
     >
-    <Item :todo="todo"></Item>
-    <Tabs :filter="filter"></Tabs>
+    <Item
+      v-for="todo in filterTodos"
+      :key="todo.id"
+      :todo="todo"
+      @delete="deleteTodo"
+    >
+    </Item>
+    <Tabs
+      :filter="filter"
+      :todos="todos"
+      @toggle="toggleFilter"
+      @clearAll="clearAllCompleted"
+    >
+    </Tabs>
   </section>
 </template>
 
@@ -22,17 +34,36 @@ export default {
   },
   data () {
     return {
-      todo: {
-        id: 0,
-        content: 'this is todo',
-        completed: false,
-      },
+      id: 0,
+      todos: [],
       filter: 'all',
     };
   },
+  computed: {
+    filterTodos () {
+      if (this.filter === 'all') {
+        return this.todos;
+      }
+      const completed = this.filter === 'completed';
+      return this.todos.filter(todo => todo.completed === completed);
+    },
+  },
   methods: {
-    addTodo () {
-
+    addTodo (e) {
+      this.todos.unshift({
+        id: this.id++,
+        content: e.target.value.trim(),
+        completed: false,
+      });
+    },
+    deleteTodo (id) {
+      this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1);
+    },
+    toggleFilter (state) {
+      this.filter = state;
+    },
+    clearAllCompleted () {
+      this.todos = this.todos.filter(todo => !todo.completed);
     },
   },
 }
