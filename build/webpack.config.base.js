@@ -1,6 +1,9 @@
 // 所有环境都需要的 webpack 配置都写在这里
 const path = require('path');
+const createVueLoaderOptions = require('./vue-loader.config');
 const { VueLoaderPlugin } = require('vue-loader');
+
+const isDev = process.env.NODE_ENV === 'development';
 
 const config = {
   target: 'web',
@@ -14,6 +17,7 @@ const config = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+        options: createVueLoaderOptions(isDev),
       },
       {
         test: /\.js$/,

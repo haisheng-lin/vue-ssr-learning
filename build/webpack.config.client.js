@@ -12,6 +12,7 @@ const baseConfig = require('./webpack.config.base');
 // 使用 cross-env 可以统一设置环境变量的方式: cross-env 
 const isDev = process.env.NODE_ENV === 'development';
 
+// 在 SSR 中 plugins 的配置不一样，所以不在 base 里面写
 const defaultPlugins = [
   new webpack.DefinePlugin({
     'process.env': {
@@ -43,7 +44,7 @@ if (isDev) {
         {
           test: /\.less$/,
           use: [
-            'style-loader',
+            'vue-style-loader', // 开发环境使用 vue-style-loader 允许 CSS 热重载，普通的 style-loader 做不到
             'css-loader',
             {
               loader: 'postcss-loader',
@@ -78,7 +79,7 @@ if (isDev) {
         {
           test: /\.less$/,
           use: ExtractPlugin.extract({
-            fallback: 'style-loader',
+            fallback: 'vue-style-loader',
             use: [
               'css-loader',
               {
