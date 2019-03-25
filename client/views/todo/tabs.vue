@@ -11,7 +11,10 @@
         {{ state }}
       </span>
     </span>
-    <span class="clear" @click="clearAllCompleted">Clear All Completed</span>
+    <span
+      class="clear"
+      @click="clearAllCompleted"
+    >Clear All Completed</span>
   </div>
 </template>
 
@@ -32,17 +35,17 @@ export default {
       states: ['all', 'active', 'completed'],
     };
   },
+  computed: {
+    unFinishedTodoLength () {
+      return this.todos.filter(todo => !todo.completed).length;
+    },
+  },
   methods: {
     toggleFilter (state) {
       this.$emit('toggle', state);
     },
     clearAllCompleted () {
       this.$emit('clearAll');
-    },
-  },
-  computed: {
-    unFinishedTodoLength () {
-      return this.todos.filter(todo => !todo.completed).length;
     },
   },
 }

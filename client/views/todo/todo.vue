@@ -12,15 +12,13 @@
       :key="todo.id"
       :todo="todo"
       @delete="deleteTodo"
-    >
-    </Item>
+    />
     <Tabs
       :filter="filter"
       :todos="todos"
       @toggle="toggleFilter"
       @clearAll="clearAllCompleted"
-    >
-    </Tabs>
+    />
   </section>
 </template>
 

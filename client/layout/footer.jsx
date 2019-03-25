@@ -1,9 +1,9 @@
-import '../assets/styles/footer.less';
+import '../assets/styles/footer.less'
 
 export default {
   data () {
     return {
-      author: 'haisheng',
+      author: 'haisheng'
     }
   },
   render () {
@@ -11,6 +11,6 @@ export default {
       <div id="footer">
         <span>Written by { this.author }</span>
       </div>
-    );
+    )
   }
-};
+}
