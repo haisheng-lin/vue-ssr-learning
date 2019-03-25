@@ -43,18 +43,39 @@ if (isDev) {
       rules: [
         {
           test: /\.less$/,
-          use: [
-            'vue-style-loader', // 开发环境使用 vue-style-loader 允许 CSS 热重载，普通的 style-loader 做不到
-            'css-loader',
+          oneOf: [
+            // 这里匹配 `<style module>`
             {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-              },
+              resourceQuery: /module/,
+              use: [
+                'vue-style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: true,
+                    localIdentName: isDev ? '[path]-[name]-[hash:base64:5]' : '[hash:base64:5]', // 把 css class 名字按规则命名
+                    camelCase: true, // 把 css 命名转换成驼峰
+                  },
+                },
+                'less-loader',
+              ],
             },
-            'less-loader', // less-loader 会转化 less 为 css，所以还得给 css-loader 处理
+            // 这里匹配普通的 `<style>` 或 `<style scoped>`
+            {
+              use: [
+                'vue-style-loader', // 开发环境使用 vue-style-loader 允许 CSS 热重载，普通的 style-loader 做不到
+                'css-loader',
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true,
+                  },
+                },
+                'less-loader', // less-loader 会转化 less 为 css，所以还得给 css-loader 处理
+              ],
+            },
           ],
-        }
+        },
       ],
     },
     plugins: defaultPlugins.concat([

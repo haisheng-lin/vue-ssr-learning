@@ -11,9 +11,6 @@ module.exports = (isDev) => {
      // 所以在这里有这个选项，允许我们把 vue 文件的样式部分单独打包
      // 那么在这我们决定：只在生产环境把 vue 中的样式提取出来，在开发环境不能，因为 webpack-dev-server 不允许设置
     extractCSS: !isDev,
-    cssModules: {
-
-    },
     // 根据环境变量生成
     // hotReload: isDev,
     // https://vue-loader.vuejs.org/zh/spec.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9D%97
