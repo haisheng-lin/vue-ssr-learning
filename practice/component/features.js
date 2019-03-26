@@ -74,7 +74,7 @@ new Vue({
   template: `
   <div>
     <CompOne ref="comp">
-      <span ref="span" slot-scope="props">{{ props.value }}</span>
+      <span ref="span" slot-scope="props">{{ props.value }} {{ value }}</span>
     </CompOne>
   </div>
   `,
