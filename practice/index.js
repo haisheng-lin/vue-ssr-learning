@@ -3,4 +3,5 @@
 // import './data-binding'
 // import './computed'
 // import './directive'
-import './custom-binding'
+// import './custom-binding'
+import './slot'
