@@ -2,7 +2,9 @@
   <div id="app">
     <div id="cover" />
     <Header />
-    <Todo />
+    <router-link to="/app">app</router-link>
+    <router-link to="/login">login</router-link>
+    <router-view />
     <!-- <Footer /> -->
   </div>
 </template>
@@ -11,12 +13,10 @@
 // 现在暂时没法解决 jsx 的使用问题
 import Header from './layout/header.vue';
 // import Footer from './layout/footer.jsx';
-import Todo from './views/todo/todo.vue';
 export default {
   components: {
     Header,
     // Footer,
-    Todo,
   },
 }
 </script>
