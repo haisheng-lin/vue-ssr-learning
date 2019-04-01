@@ -24,6 +24,9 @@ export default {
     Header,
     // Footer,
   },
+  mounted () {
+    console.log(this.$store.state)
+  },
 }
 </script>
 
