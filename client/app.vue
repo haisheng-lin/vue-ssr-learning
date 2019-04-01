@@ -3,7 +3,7 @@
     <div id="cover" />
     <Header />
     <router-link to="/app">
-      app
+      {{ fullName }} - {{ counter }}
     </router-link>
     <router-link to="/login">
       login
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters } from 'vuex'
 // 现在暂时没法解决 jsx 的使用问题
 import Header from './layout/header.vue';
 // import Footer from './layout/footer.jsx';
@@ -23,6 +24,14 @@ export default {
   components: {
     Header,
     // Footer,
+  },
+  computed: {
+    ...mapState({
+      counter: (state) => state.count,
+    }),
+    ...mapGetters({
+      fullName: 'fullName',
+    }),
   },
   mounted () {
     console.log(this.$store.state)
