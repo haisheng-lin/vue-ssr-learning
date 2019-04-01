@@ -14,6 +14,13 @@ Vue.use(Vuex)
 const router = createRouter()
 const store = createStore()
 
+// 可以动态注册模块
+store.registerModule('c', {
+  state: {
+    text: 3,
+  },
+})
+
 router.beforeEach((to, from, next) => {
   console.log('global beforeEach')
   next()

@@ -3,7 +3,7 @@
     <div id="cover" />
     <Header />
     <router-link to="/app">
-      {{ fullName }} - {{ counter }}
+      {{ fullName }}
     </router-link>
     <router-link to="/login">
       login
@@ -27,19 +27,25 @@ export default {
   },
   computed: {
     ...mapState({
-      counter: (state) => state.count,
+      // counter: (state) => state.count,
+      // textA: (state) => state.a.text,
+      // textB: (state) => state.b.text,
     }),
     ...mapGetters({
       fullName: 'fullName',
+      // 'textAPlus': 'a/textPlus',
     }),
   },
   mounted () {
-    this.updateCountAsync({ num: 5, time: 2000 })
+    // this.updateCountAsync({ num: 5, time: 2000 })
   },
   methods: {
-    ...mapActions({
-      updateCountAsync: 'updateCountAsync',
-    }),
+    // ...mapMutations({
+    //   updateTextA: 'a/updateTextA',
+    // }),
+    // ...mapActions({
+    //   updateCountAsync: 'updateCountAsync',
+    // }),
   },
 }
 </script>
