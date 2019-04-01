@@ -2,9 +2,15 @@
   <div id="app">
     <div id="cover" />
     <Header />
-    <router-link to="/app">app</router-link>
-    <router-link to="/login">login</router-link>
-    <router-view />
+    <router-link to="/app">
+      app
+    </router-link>
+    <router-link to="/login">
+      login
+    </router-link>
+    <transition name="fade">
+      <router-view />
+    </transition>
     <!-- <Footer /> -->
   </div>
 </template>
