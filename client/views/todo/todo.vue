@@ -37,6 +37,22 @@ export default {
       filter: 'all',
     };
   },
+  beforeRouteEnter (to, from, next) {
+    console.log('todo beforeRouteEnter')
+    next()
+  },
+  // 这个钩子只有在路由使用了参数的时候，而这参数被更新了，才会调用
+  // 例如：/list/:id，点击不同元素进入详情页，那么每次点击详情页的时候会调用这钩子
+  // 用处：根据这个参数获取数据展示页面，可以通过这钩子做
+  // 而且如果接口出错了，还可以不用 next，进入到这个详情页
+  beforeRouteUpdate (to, from, next) {
+    console.log('todo beforeRouteUpdate')
+    next()
+  },
+  beforeRouteLeave (to, from, next) {
+    console.log('todo beforeRouteLeave')
+    next()
+  },
   computed: {
     filterTodos () {
       if (this.filter === 'all') {
