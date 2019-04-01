@@ -9,7 +9,7 @@ const ExtractPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
 // windows npm script 设置变量是通过 set NODE_ENV=production
 // mac npm script 设置变量是 NODE_ENV=production NODE_ENV=production
-// 使用 cross-env 可以统一设置环境变量的方式: cross-env 
+// 使用 cross-env 可以统一设置环境变量的方式: cross-env
 const isDev = process.env.NODE_ENV === 'development';
 
 // 在 SSR 中 plugins 的配置不一样，所以不在 base 里面写
@@ -19,7 +19,9 @@ const defaultPlugins = [
       NODE_ENV: isDev ? '"development"' : '"production"',
     },
   }),
-  new HtmlPlugin(),
+  new HtmlPlugin({
+    template: path.join(__dirname, 'template.html')
+  }),
 ];
 
 const devServer = { // 支持热更新

@@ -3,18 +3,19 @@
     <div id="cover" />
     <Header />
     <Todo />
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
+// 现在暂时没法解决 jsx 的使用问题
 import Header from './layout/header.vue';
-import Footer from './layout/footer.jsx';
+// import Footer from './layout/footer.jsx';
 import Todo from './views/todo/todo.vue';
 export default {
   components: {
     Header,
-    Footer,
+    // Footer,
     Todo,
   },
 }
