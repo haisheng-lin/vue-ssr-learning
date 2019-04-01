@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 // 现在暂时没法解决 jsx 的使用问题
 import Header from './layout/header.vue';
 // import Footer from './layout/footer.jsx';
@@ -34,7 +34,12 @@ export default {
     }),
   },
   mounted () {
-    console.log(this.$store.state)
+    this.updateCountAsync({ num: 5, time: 2000 })
+  },
+  methods: {
+    ...mapActions({
+      updateCountAsync: 'updateCountAsync',
+    }),
   },
 }
 </script>
