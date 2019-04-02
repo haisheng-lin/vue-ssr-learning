@@ -48,6 +48,7 @@ let config;
 if (isDev) {
   // webpack-merge 不影响 baseConfig，因为产生的是新结果
   config = webpackMerge(baseConfig, {
+    mode: 'development',
     devtool: '#cheap-module-eval-source-map',
     devServer,
     module: {
@@ -96,6 +97,7 @@ if (isDev) {
   });
 } else {
   config = webpackMerge(baseConfig, {
+    mode: 'production',
     entry: {
       // 将类库与第三方依赖单独打包成 vendor，因为如果跟业务代码混在一起，那么由于业务经常更新所以导致这些都无法长期缓存
       app: path.join(__dirname, '../client/index.js'),

@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
 
+const pageRouter = require('./routes/dev-ssr')
+
 const isDev = process.env.NODE_ENV === 'development'
 
 app.use((req, res, next) => {
   try {
-    console.log(req)
+    console.log(`request with path: ${req.path}`)
     next()
   } catch (err) {
     console.error(err)
@@ -16,4 +18,13 @@ app.use((req, res, next) => {
       res.send('please try later')
     }
   }
+})
+
+app.use('*', pageRouter)
+
+const HOST = process.env.HOST || '0.0.0.0'
+const PORT = process.env.PORT || 3333
+
+app.listen(PORT, HOST, () => {
+  console.log(`server is listening on ${HOST}:${PORT}`)
 })

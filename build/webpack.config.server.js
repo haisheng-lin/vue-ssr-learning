@@ -13,6 +13,7 @@ const baseConfig = require('./webpack.config.base');
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 
 const config = webpackMerge(baseConfig, {
+  mode: 'none',
   entry: path.join(__dirname, '../client/server-entry.js'),
   target: 'node', // 服务端渲染必须传
   devtool: 'source-map',
