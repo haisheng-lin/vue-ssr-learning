@@ -1,5 +1,5 @@
-import Todo from '../views/todo/todo.vue'
-import Login from '../views/login/login.vue'
+// import Todo from '../views/todo/todo.vue'
+// import Login from '../views/login/login.vue'
 
 export default [
   { // 默认根路径跳转至 app
@@ -8,12 +8,12 @@ export default [
   },
   {
     path: '/app',
-    component: Todo,
-    // component: () => import('../views/todo/todo.vue'),
+    // component: Todo,
+    component: () => import('../views/todo/todo.vue'),
   },
   {
     path: '/login',
-    component: Login,
-    // component: () => import('../views/login/login.vue'),
+    // component: Login,
+    component: () => import('../views/login/login.vue'),
   },
 ]
