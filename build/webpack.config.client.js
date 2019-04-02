@@ -7,6 +7,8 @@ const HtmlPlugin = require('html-webpack-plugin');
 // 将非 JS 的文件单独打包分离出来，这里主要是希望单独引入 CSS
 const ExtractPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
+
+const VueClientPlugin = require('vue-server-renderer/client-plugin');
 // windows npm script 设置变量是通过 set NODE_ENV=production
 // mac npm script 设置变量是 NODE_ENV=production NODE_ENV=production
 // 使用 cross-env 可以统一设置环境变量的方式: cross-env
@@ -22,6 +24,7 @@ const defaultPlugins = [
   new HtmlPlugin({
     template: path.join(__dirname, 'template.html')
   }),
+  new VueClientPlugin(),
 ];
 
 const devServer = { // 支持热更新

@@ -21,6 +21,7 @@ const config = webpackMerge(baseConfig, {
     filename: 'server-entry.js',
     path: path.join(__dirname, '../server-build'),
   },
+  // 纯前端渲染就需要把类库连同你的代码一起打包，因为浏览器没有 module 模块
   // 不要打包 vue, vuex, vue-router 到 node
   // 因为如果打包了，就跟 node_modules 里面的依赖有重复，造成打包了两份文件
   externals: Object.keys(require('../package.json').dependencies),
