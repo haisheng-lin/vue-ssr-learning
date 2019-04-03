@@ -38,7 +38,13 @@ const devServer = { // 支持热更新
   // 但是服务端没做配置的话，就会返回 404 cannot GET...
   // webpack 加上这个配置的话，那么就能匹配到打包文件的 index.html
   historyApiFallback: {
-    index: '/index.html',
+    // index: '/index.html',
+    rewrites: [
+      {
+        from: /.*/g,
+        to: '/public/index.html',
+      }
+    ]
   },
   hot: true, // 只重加载改动的组件
   // open: true, // 每次都会自动打开页面
@@ -101,7 +107,7 @@ if (isDev) {
     mode: 'production',
     entry: {
       // 将类库与第三方依赖单独打包成 vendor，因为如果跟业务代码混在一起，那么由于业务经常更新所以导致这些都无法长期缓存
-      app: path.join(__dirname, '../client/index.js'),
+      app: path.join(__dirname, '../client/client-entry.js'),
     },
     output: {
       // chunkhash 与 hash 的区别：

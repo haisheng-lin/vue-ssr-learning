@@ -26,6 +26,9 @@
 import Item from './item.vue';
 import Tabs from './tabs.vue';
 export default {
+  metaInfo: { // 子组件的优先级比父组件高
+    title: `todo app`,
+  },
   components: {
     Item,
     Tabs,

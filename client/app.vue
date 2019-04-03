@@ -21,6 +21,9 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import Header from './layout/header.vue';
 // import Footer from './layout/footer.jsx';
 export default {
+  metaInfo: {
+    title: `haisheng's todo app`,
+  },
   components: {
     Header,
     // Footer,
