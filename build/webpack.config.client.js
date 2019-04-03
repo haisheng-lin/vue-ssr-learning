@@ -5,7 +5,8 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const HtmlPlugin = require('html-webpack-plugin');
 // 将非 JS 的文件单独打包分离出来，这里主要是希望单独引入 CSS
-const ExtractPlugin = require('extract-text-webpack-plugin');
+// const ExtractPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const baseConfig = require('./webpack.config.base');
 
 const VueClientPlugin = require('vue-server-renderer/client-plugin');
@@ -112,24 +113,25 @@ if (isDev) {
       rules: [
         {
           test: /\.less$/,
-          use: ExtractPlugin.extract({
-            fallback: 'vue-style-loader',
-            use: [
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true,
-                },
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
               },
-              'less-loader',
-            ],
-          }),
+            },
+            'less-loader',
+          ],
         },
       ],
     },
     plugins: defaultPlugins.concat([
-      new ExtractPlugin('styles.[hash:8].css'),
+      new MiniCssExtractPlugin({
+        filename: 'styles.[contentHash:8].css'
+      }),
+      // new ExtractPlugin('styles.[hash:8].css'),
       // 在 webpack3 是 webpack.optimize.CommonsChunkPlugin
       new webpack.optimize.SplitChunksPlugin({
         name: 'runtime',
