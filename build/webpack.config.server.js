@@ -33,7 +33,6 @@ const config = webpackMerge(baseConfig, {
         test: /\.less$/,
         use: [
           'vue-style-loader',
-          // 'null-loader',
           'css-loader',
           {
             loader: 'postcss-loader',

@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const app = express()
 
@@ -17,6 +18,14 @@ app.use((req, res, next) => {
     } else {
       res.send('please try later')
     }
+  }
+})
+
+app.use((req, res, next) => {
+  if (req.path === '/favicon.ico') {
+    res.sendFile(path.join(__dirname, '../favicon.ico'))
+  } else {
+    next()
   }
 })
 
