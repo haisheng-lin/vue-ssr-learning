@@ -4,7 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 // 将非 JS 的文件单独打包分离出来，这里主要是希望单独引入 CSS
-const ExtractPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
 // windows npm script 设置变量是通过 set NODE_ENV=production
 // mac npm script 设置变量是 NODE_ENV=production NODE_ENV=production
@@ -13,6 +12,7 @@ const baseConfig = require('./webpack.config.base');
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 
 const config = webpackMerge(baseConfig, {
+  mode: 'none',
   entry: path.join(__dirname, '../client/server-entry.js'),
   target: 'node', // 服务端渲染必须传
   devtool: 'source-map',
@@ -31,24 +31,21 @@ const config = webpackMerge(baseConfig, {
         // 但是 node 端没有 dom 环境，那么就会报错
         // 所以单独打包出来
         test: /\.less$/,
-        use: ExtractPlugin.extract({
-          fallback: 'vue-style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-              },
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
             },
-            'less-loader',
-          ],
-        }),
+          },
+          'less-loader',
+        ],
       },
     ],
   },
   plugins: [
-    new ExtractPlugin('styles.[hash:8].css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.VUE_ENV': '"server"',

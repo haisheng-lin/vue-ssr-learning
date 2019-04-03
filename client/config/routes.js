@@ -8,10 +8,12 @@ export default [
   },
   {
     path: '/app',
+    // component: Todo,
     component: () => import('../views/todo/todo.vue'),
   },
   {
     path: '/login',
+    // component: Login,
     component: () => import('../views/login/login.vue'),
   },
 ]

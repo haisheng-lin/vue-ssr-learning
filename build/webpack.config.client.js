@@ -5,7 +5,8 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const HtmlPlugin = require('html-webpack-plugin');
 // 将非 JS 的文件单独打包分离出来，这里主要是希望单独引入 CSS
-const ExtractPlugin = require('extract-text-webpack-plugin');
+// const ExtractPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const baseConfig = require('./webpack.config.base');
 
 const VueClientPlugin = require('vue-server-renderer/client-plugin');
@@ -48,6 +49,7 @@ let config;
 if (isDev) {
   // webpack-merge 不影响 baseConfig，因为产生的是新结果
   config = webpackMerge(baseConfig, {
+    mode: 'development',
     devtool: '#cheap-module-eval-source-map',
     devServer,
     module: {
@@ -96,6 +98,7 @@ if (isDev) {
   });
 } else {
   config = webpackMerge(baseConfig, {
+    mode: 'production',
     entry: {
       // 将类库与第三方依赖单独打包成 vendor，因为如果跟业务代码混在一起，那么由于业务经常更新所以导致这些都无法长期缓存
       app: path.join(__dirname, '../client/index.js'),
@@ -110,24 +113,25 @@ if (isDev) {
       rules: [
         {
           test: /\.less$/,
-          use: ExtractPlugin.extract({
-            fallback: 'vue-style-loader',
-            use: [
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true,
-                },
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
               },
-              'less-loader',
-            ],
-          }),
+            },
+            'less-loader',
+          ],
         },
       ],
     },
     plugins: defaultPlugins.concat([
-      new ExtractPlugin('styles.[hash:8].css'),
+      new MiniCssExtractPlugin({
+        filename: 'styles.[contentHash:8].css'
+      }),
+      // new ExtractPlugin('styles.[hash:8].css'),
       // 在 webpack3 是 webpack.optimize.CommonsChunkPlugin
       new webpack.optimize.SplitChunksPlugin({
         name: 'runtime',
