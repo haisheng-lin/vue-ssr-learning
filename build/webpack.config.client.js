@@ -114,6 +114,8 @@ if (isDev) {
       // chunkhash 如果你的文件不改变（类库），那么下次打包时的哈希值不会变；但是 hash 每次都会变
       // 所以第三方依赖与类库需要使用 chunkhash，否则单独打包就没意义了，也无法做长期缓存
       filename: '[name].[chunkhash:8].js',
+      // ssr 生产环境没有 devServer，所以这里还得做修改
+      publicPath: '/public/',
     },
     module: {
       rules: [
