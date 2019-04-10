@@ -20,6 +20,7 @@ const config = webpackMerge(baseConfig, {
     libraryTarget: 'commonjs2',
     filename: 'server-entry.js',
     path: path.join(__dirname, '../server-build'),
+    publicPath: '/public/',
   },
   // 纯前端渲染就需要把类库连同你的代码一起打包，因为浏览器没有 module 模块
   // 不要打包 vue, vuex, vue-router 到 node

@@ -7,10 +7,10 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const config = {
   target: 'web',
-  entry: path.join(__dirname, '../client/index.js'),
+  entry: path.join(__dirname, '../client/client-entry.js'),
   output: {
     filename: 'bundle.[hash:8].js',
-    path: path.join(__dirname, '../dist'),
+    path: path.join(__dirname, '../public'),
     publicPath: '//127.0.0.1:8000/public/',
   },
   module: {
