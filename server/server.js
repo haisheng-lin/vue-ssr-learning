@@ -2,8 +2,6 @@ const path = require('path')
 const express = require('express')
 const app = express()
 
-const pageRouter = require('./routes/dev-ssr')
-
 const isDev = process.env.NODE_ENV === 'development'
 
 app.use((req, res, next) => {
@@ -29,6 +27,9 @@ app.use((req, res, next) => {
   }
 })
 
+const pageRouter = isDev ? require('./routes/dev-ssr') : require('./routes/ssr')
+const staticRouter = require('./routes/static')
+app.use('/public', staticRouter)
 app.use('*', pageRouter)
 
 const HOST = process.env.HOST || '0.0.0.0'

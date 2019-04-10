@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 
+import VueMeta from 'vue-meta'
+
 import App from './app.vue'
 import createStore from './store/store'
 import createRouter from './config/router'
@@ -10,6 +12,7 @@ import './assets/styles/global.less'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(VueMeta)
 
 export default () => {
   const router = createRouter()
