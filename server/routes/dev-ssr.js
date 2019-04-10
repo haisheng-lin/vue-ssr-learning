@@ -16,6 +16,7 @@ const mfs = new MemoryFS()
 serverCompiler.outputFileSystem = mfs // 指定 ssr 输出目录是 mfs
 
 let bundle
+// webpack.config.server.js 在 webpackCompiler 中生成 vue-ssr-server-bundle.json 文件
 serverCompiler.watch({}, (err, stats) => {
   if (err) {
     throw err
@@ -46,6 +47,7 @@ const handleSSR = async (req, res) => {
     const clientManifest = clientManifestResp.data
 
     const template = fs.readFileSync(path.join(__dirname, '../server-template.ejs'), 'utf-8')
+    // 根据 vue-ssr-server-bundle.json 得到 bundle 对象，再加上 clientManifest 生成 renderer
     const renderer = VueServerRenderer.createBundleRenderer(bundle, {
       inject: false,
       clientManifest,
